@@ -29,6 +29,26 @@ const Home = () => {
                         image={game.background_image}/> 
                 )}
             </Games>
+            <h2>Popular Games</h2>
+            <Games>
+                {popular.map((game)=>
+                     <Game 
+                        name={game.name} 
+                        released={game.released} 
+                        key={game.id} 
+                        image={game.background_image}/> 
+                )}
+            </Games>
+            <h2>New Games</h2>
+            <Games>
+                {newGames.map((game)=>
+                     <Game 
+                        name={game.name} 
+                        released={game.released} 
+                        key={game.id} 
+                        image={game.background_image}/> 
+                )}
+            </Games>
         </GameList>
     );
 }
@@ -37,7 +57,7 @@ const Home = () => {
 const GameList = styled(motion.div) `
     padding: 0rem 5rem;
     h2{
-        padding: 5rem 0rem;
+        padding: 3rem 0rem;
     }
 `
 
