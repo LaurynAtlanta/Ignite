@@ -161,6 +161,8 @@ const Platforms = styled(motion.div)`
     justify-content: space-evenly;
     img{
         margin-left: 3rem;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
 `

@@ -22,7 +22,7 @@ const Home = () => {
       dispatch(loadGames());
     },[dispatch]); 
     //extracting all items from redux state games
-    const {popular, newGames, upcoming} = useSelector((state) => state.games); 
+    const {popular, newGames, upcoming, searched} = useSelector((state) => state.games); 
 
 
     return (  
@@ -33,6 +33,22 @@ const Home = () => {
                     { pathId && <GameDetail pathId={pathId} />}
                 </AnimatePresence>
                 {/* if there is an id when we click on game then display the details for id */}
+                {searched.length ? ( 
+                    // have to put searched.length becuase searched is an empty array and that is truthy.
+                    <div>
+                        <h2>Searched Games</h2>
+                        <Games>
+                            {searched.map((game)=>
+                                <Game 
+                                    name={game.name} 
+                                    released={game.released} 
+                                    key={game.id} 
+                                    id={game.id} 
+                                    image={game.background_image}/> 
+                            )}
+                        </Games>              
+                    </div>
+                ): ''}
                 <h2>Upcoming Games</h2>
                 <Games>
                     {upcoming.map((game)=>
