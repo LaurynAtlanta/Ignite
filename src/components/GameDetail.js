@@ -12,6 +12,8 @@ import xbox from "../img/xbox.svg";
 import nintendo from "../img/nintendo.svg";
 import apple from "../img/apple.svg";
 import gamepad from "../img/gamepad.svg";
+import starEmpty from '../img/star-empty.png';
+import starFull from '../img/star-full.png';
 
 
 const GameDetail = (props) => {
@@ -25,6 +27,9 @@ const GameDetail = (props) => {
       history.push('/');
     }
   }
+
+    //Data
+    const { screen, game, isLoading } = useSelector((state) => state.detail);
 
   //Get platform Images
   const getPlatform = (platform) => {
@@ -44,9 +49,22 @@ const GameDetail = (props) => {
     }
   };
 
+  //Star Logic
+  const getStars = ()=> {
+    const stars=[];
+    const rating = Math.floor(game.rating);
+    for(let i = 1; i <= 5; i++){
+      if(i<=rating){
+        stars.push( <img src={starFull} alt='starfull' key={i}></img> )
+      } else{
+        stars.push( <img src={starEmpty} alt='starempty' key={i}></img> )
+      }
+    }
+    return stars; 
+    // make sure you out put the stars
+  }
 
-    //Data
-    const { screen, game, isLoading } = useSelector((state) => state.detail);
+
     return (
       <>
       {!isLoading && (
@@ -56,6 +74,7 @@ const GameDetail = (props) => {
             <div className="rating">
               <motion.h3 Layout={`title ${props.pathId}`}>{game.name}</motion.h3>
               <p>Rating: {game.rating}</p>
+              {getStars()}
             </div>
             <Info>
               <h3>Platforms</h3>
@@ -128,6 +147,11 @@ const Stats = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    img{
+      width: 1rem;
+      height: 1rem;
+      display: inline;
+    }
 `
 const Info = styled(motion.div)`
     text-align: center;
