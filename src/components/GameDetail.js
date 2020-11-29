@@ -4,43 +4,56 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 //Redux
 import { useSelector } from "react-redux";
+import {useHistory} from 'react-router-dom';
+import {smallImage} from '../util';
 
 const GameDetail = () => {
+  const history = useHistory();
+  //Exit detail
+  const exitDetailHandler = (e) => {
+    const element = e.target;
+    //when you click on the shadow it sets the background back to scroll and changes the link to / to get rid of details
+    if(element.classList.contains('shadow')){
+      document.body.style.overflow = 'auto';
+      history.push('/');
+    }
+  }
     //Data
-    const { screen, game } = useSelector((state) => state.detail);
+    const { screen, game, isLoading } = useSelector((state) => state.detail);
     return (
-      <CardShadow>
+      <>
+      {!isLoading && (
+      <CardShadow className='shadow' onClick={exitDetailHandler}>
         <Detail>
-          <div className="stats">
+          <Stats>
             <div className="rating">
               <h3>{game.name}</h3>
               <p>Rating: {game.rating}</p>
             </div>
-            <div className="info">
+            <Info>
               <h3>Platforms</h3>
-              <div className="platforms">
-                {game.platform && game.platforms.map((data) => (
-                  <h3 key={data.platform.id}>{data.platform.name}</h3>
+              <Platforms>
+                {game.platforms.map((data) => (
+                    <h3 key={data.platform.id}>{data.platform.name}</h3>
                 ))}
-              </div>
+              </Platforms>
+            </Info>
+          </Stats>
+          <Media>
+            <img src={smallImage(game.background_image, 1280)} alt={game.background_image} />
+          </Media>
+          <Description>
+            <p>{game.description_raw}</p>
+          </Description>
+            <div className="gallery">
+                {screen.results && screen.results.map((screen) => (
+                <img src={smallImage(screen.image, 1280)} key={screen.id} alt={screen.image} />
+                ))}
             </div>
-          </div>
-          <div className="media">
-            <img src={game.background_image} alt={game.background_image} />
-          </div>
-          <div className="description">
-            <p>{game.description_raw}</p>
-          </div>
-          <div className="description">
-            <p>{game.description_raw}</p>
-          </div>
-          <div className="gallery">
-            {screen.results && screen.results.map((screen) => (
-              <img src={screen.image} key={screen.id} alt={screen.image} />
-            ))}
-          </div>
         </Detail>
       </CardShadow>
+      )}
+      </>
     );
   };
 
@@ -68,7 +81,7 @@ const CardShadow = styled(motion.div)`
 const Detail = styled(motion.div)`
     width: 80%;
     border-radius: 1rem;
-    padding: 2rem 10rem;
+    padding: 2rem 5rem;
     background-color:white;
     position: absolute;
     left:10%;
@@ -78,5 +91,32 @@ const Detail = styled(motion.div)`
     }
 `
 
+const Stats = styled(motion.div)`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
+const Info = styled(motion.div)`
+    text-align: center;
+`
+const Platforms = styled(motion.div)`
+    display: flex;
+    justify-content: space-evenly;
+    img{
+        margin-left: 3rem;
+    }
+
+`
+
+const Media = styled(motion.div)`
+    margin: 2rem;
+    img{
+        width: 100%;
+    }
+`
+
+const Description = styled(motion.div)`
+    margin: 2.5rem 0rem;
+`
  
 export default GameDetail;

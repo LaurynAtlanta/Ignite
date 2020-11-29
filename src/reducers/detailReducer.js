@@ -1,4 +1,5 @@
-const initialState = { game: {}, screen: {}};
+const initialState = { game: {platforms:[]}, screen: {results:[]}, isLoading: true};
+//we add empty aray so that it always starts with some data before the details are loaded.
 
 const detailReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -7,7 +8,13 @@ const detailReducer = (state = initialState, action) => {
         ...state,
         game: action.payload.game,
         screen: action.payload.screen,
+        isLoading: false,
       };
+    case 'LOADING_DETAIL':
+      return{
+        ...state,
+        isLoading: true,
+      }
     default:
       return { ...state };
   }

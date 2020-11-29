@@ -9,7 +9,14 @@ import GameDetail from '../components/GameDetail';
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
 
+import {useLocation} from 'react-router-dom';
+
 const Home = () => {
+    //get current location 
+    const location = useLocation();
+    const pathId = location.pathname.split('/')[2];
+
+    //Fetch games through dispatch
     const dispatch = useDispatch();
     useEffect(()=> {
       dispatch(loadGames());
@@ -20,7 +27,8 @@ const Home = () => {
 
     return (  
         <GameList>
-            <GameDetail/>
+            { pathId && <GameDetail/> } 
+            {/* if there is an id when we click on game then display the details for id */}
             <h2>Upcoming Games</h2>
             <Games>
                 {upcoming.map((game)=>
