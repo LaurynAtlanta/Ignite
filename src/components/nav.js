@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
+import {fadeIn} from '../animations';
 import logo from '../img/logo.svg';
 //redux and routes
 import {fetchSearch} from '../actions/gamesAction';
 import {useDispatch} from 'react-redux';
+
 
 const Nav = () => {
     const [textInput, setTextInput] = useState('');
@@ -24,7 +26,7 @@ const Nav = () => {
     }
 
     return (  
-        <StyledNav>
+        <StyledNav variants = {fadeIn} initial='hidden' animate='show'>
             <Logo onClick={clearSearched}>
                 <img src={logo} alt="Ignite Logo"/>
                 <h1>IGNITE</h1>

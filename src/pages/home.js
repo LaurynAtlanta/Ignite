@@ -8,6 +8,7 @@ import GameDetail from '../components/GameDetail';
 //styling and animation
 import styled from 'styled-components';
 import {motion, AnimatePresence, AnimateSharedLayout} from 'framer-motion';
+import {fadeIn} from '../animations';
 
 import {useLocation} from 'react-router-dom';
 
@@ -26,7 +27,7 @@ const Home = () => {
 
 
     return (  
-        <GameList>
+        <GameList variants = {fadeIn} initial='hidden' animate='show'>
             <AnimateSharedLayout type='crossfade'>
                 {/*  must have some kind of toggle in between animate presence, when path id toggles game detail, animate presence works. */}
                 <AnimatePresence> 
@@ -93,7 +94,7 @@ const Home = () => {
 const GameList = styled(motion.div) `
     padding: 0rem 5rem;
     h2{
-        padding: 3rem 0rem;
+        padding: 2.5rem 0rem;
     }
 `
 
