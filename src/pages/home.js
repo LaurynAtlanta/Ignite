@@ -7,7 +7,7 @@ import Game from '../components/Game';
 import GameDetail from '../components/GameDetail';
 //styling and animation
 import styled from 'styled-components';
-import {motion} from 'framer-motion';
+import {motion, AnimatePresence, AnimateSharedLayout} from 'framer-motion';
 
 import {useLocation} from 'react-router-dom';
 
@@ -27,39 +27,48 @@ const Home = () => {
 
     return (  
         <GameList>
-            { pathId && <GameDetail/> } 
-            {/* if there is an id when we click on game then display the details for id */}
-            <h2>Upcoming Games</h2>
-            <Games>
-                {upcoming.map((game)=>
-                     <Game 
-                        name={game.name} 
-                        released={game.released} 
-                        key={game.id} 
-                        id={game.id} 
-                        image={game.background_image}/> 
-                )}
-            </Games>
-            <h2>Popular Games</h2>
-            <Games>
-                {popular.map((game)=>
-                     <Game 
-                        name={game.name} 
-                        released={game.released} 
-                        key={game.id} 
-                        image={game.background_image}/> 
-                )}
-            </Games>
-            <h2>New Games</h2>
-            <Games>
-                {newGames.map((game)=>
-                     <Game 
-                        name={game.name} 
-                        released={game.released} 
-                        key={game.id} 
-                        image={game.background_image}/> 
-                )}
-            </Games>
+            <AnimateSharedLayout type='crossfade'>
+                {/*  must have some kind of toggle in between animate presence, when path id toggles game detail, animate presence works. */}
+                <AnimatePresence> 
+                    { pathId && <GameDetail pathId={pathId} />}
+                </AnimatePresence>
+                {/* if there is an id when we click on game then display the details for id */}
+                <h2>Upcoming Games</h2>
+                <Games>
+                    {upcoming.map((game)=>
+                        <Game 
+                            name={game.name} 
+                            released={game.released} 
+                            key={game.id} 
+                            id={game.id} 
+                            image={game.background_image}/> 
+                    )}
+                </Games>
+                <h2>Popular Games</h2>
+                <Games>
+                {popular.map((game) => (
+                    <Game
+                    name={game.name}
+                    released={game.released}
+                    id={game.id}
+                    image={game.background_image}
+                    key={game.id}
+                    />
+                ))}
+                </Games>
+                <h2>New Games</h2>
+                <Games>
+                {newGames.map((game) => (
+                    <Game
+                    name={game.name}
+                    released={game.released}
+                    id={game.id}
+                    image={game.background_image}
+                    key={game.id}
+                    />
+                ))}
+                </Games>
+            </AnimateSharedLayout>
         </GameList>
     );
 }
